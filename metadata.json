@@ -1,0 +1,9 @@
+{
+  "name": "AgriConnect",
+  "description": "Una red social y plataforma de asistencia integral para agricultores.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

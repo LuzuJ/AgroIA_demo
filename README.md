@@ -58,9 +58,6 @@ Renombra el archivo `.env.example` a `.env` y configura tus accesos:
 # URL de precios locales (por defecto lee de public/api/prices.json)
 VITE_PRICES_API_URL=/api/prices.json
 
-# API Key de Gemini para el Chatbot
-VITE_GEMINI_API_KEY=tu_clave_aqui
-
 # API Key de API-Ninjas para precios globales de Cacao en tiempo real
 VITE_API_NINJAS_KEY=tu_clave_aqui
 ```
@@ -76,7 +73,7 @@ AgroL está diseñado como una SPA estática, por lo que es ideal para alojarse 
 3.  Selecciona el repositorio.
 4.  Configura el comando de build: `npm run build`
 5.  Directorio de salida: `dist`
-6.  **¡Importante!** Añade las variables de entorno (`VITE_GEMINI_API_KEY` y `VITE_API_NINJAS_KEY`) en la configuración del proyecto en Vercel/Netlify antes de desplegar.
+6.  **¡Importante!** Añade las variables de entorno (`VITE_API_NINJAS_KEY`) en la configuración del proyecto en Vercel/Netlify antes de desplegar.
 
 ---
 *Desarrollado para revolucionar la agricultura en Ecuador mediante tecnología accesible.*

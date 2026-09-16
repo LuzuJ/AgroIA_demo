@@ -2,41 +2,79 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AgriConnect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="AgriEcuador — Precios de mercado y guía de enfermedades para agricultores del Ecuador." />
+    <meta name="theme-color" content="#15803d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>AgriEcuador</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google Fonts: Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
     <style>
+      * { font-family: 'Nunito', sans-serif; }
+
       body {
-        font-family: 'Inter', sans-serif;
+        background: #f7f3ee;
+        overscroll-behavior: none;
       }
-      /* Custom scrollbar for better aesthetics */
-      ::-webkit-scrollbar {
-        width: 6px;
+
+      /* Premium Scrollbar */
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #86efac; border-radius: 4px; }
+
+      /* Smooth transitions */
+      .view-enter { animation: fadeSlideUp 0.25s ease-out; }
+      @keyframes fadeSlideUp {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
       }
-      ::-webkit-scrollbar-track {
-        background: #f1f1f1; 
+
+      /* Disease card expand */
+      .disease-body { animation: expandIn 0.2s ease-out; }
+      @keyframes expandIn {
+        from { opacity: 0; max-height: 0; }
+        to   { opacity: 1; max-height: 800px; }
       }
-      ::-webkit-scrollbar-thumb {
-        background: #10b981; 
-        border-radius: 3px;
+
+      /* Glass card */
+      .glass {
+        background: rgba(255,255,255,0.75);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.9);
       }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #059669; 
+
+      /* Offline banner */
+      .offline-bar {
+        background: #f59e0b;
+        color: #1c1917;
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
-  }
-}
-</script>
-</head>
-  <body class="bg-gray-50 text-gray-900 antialiased">
+  </head>
+  <body>
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+
+    <!-- Register Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('SW registered:', reg.scope))
+            .catch(err => console.warn('SW failed:', err));
+        });
+      }
+    </script>
   </body>
 </html>

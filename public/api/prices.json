@@ -1,0 +1,101 @@
+[
+  {
+    "id": "1",
+    "productName": "Cacao Fino de Aroma",
+    "region": "Guayas, Los Ríos",
+    "price": 125.50,
+    "unit": "qq (100 lbs)",
+    "trend": "up",
+    "source": "SIPA Referencial"
+  },
+  {
+    "id": "2",
+    "productName": "Cacao CCN-51",
+    "region": "Nacional",
+    "price": 118.00,
+    "unit": "qq (100 lbs)",
+    "trend": "up",
+    "source": "Mercado Interno"
+  },
+  {
+    "id": "3",
+    "productName": "Banano Exportación",
+    "region": "El Oro, Guayas",
+    "price": 6.85,
+    "unit": "Caja 43 lbs",
+    "trend": "stable",
+    "source": "MAG (Precio Mínimo)"
+  },
+  {
+    "id": "4",
+    "productName": "Plátano Verde Dominico",
+    "region": "El Carmen, Manabí",
+    "price": 5.50,
+    "unit": "Caja",
+    "trend": "down",
+    "source": "SIPA"
+  },
+  {
+    "id": "5",
+    "productName": "Arroz en Cáscara",
+    "region": "Daule, Guayas",
+    "price": 38.00,
+    "unit": "Saca (200 lbs)",
+    "trend": "stable",
+    "source": "Piladoras Referencial"
+  },
+  {
+    "id": "6",
+    "productName": "Arroz Pilado (Grado 1)",
+    "region": "Nacional",
+    "price": 45.00,
+    "unit": "qq (100 lbs)",
+    "trend": "up",
+    "source": "Mercado Mayorista"
+  },
+  {
+    "id": "7",
+    "productName": "Maíz Duro Amarillo",
+    "region": "Los Ríos",
+    "price": 16.55,
+    "unit": "qq (100 lbs)",
+    "trend": "stable",
+    "source": "Precio Mínimo de Sustentación"
+  },
+  {
+    "id": "8",
+    "productName": "Papa Superchola",
+    "region": "Carchi, Tungurahua",
+    "price": 22.00,
+    "unit": "qq (100 lbs)",
+    "trend": "up",
+    "source": "Mercado Mayorista"
+  },
+  {
+    "id": "9",
+    "productName": "Camarón Entero (40/50)",
+    "region": "Guayas, El Oro",
+    "price": 2.10,
+    "unit": "libra",
+    "trend": "down",
+    "source": "Cámara Nacional de Acuacultura"
+  },
+  {
+    "id": "10",
+    "productName": "Tomate Riñón",
+    "region": "Pichincha, Azuay",
+    "price": 0.60,
+    "unit": "kilo",
+    "trend": "stable",
+    "source": "SIPA Mayorista"
+  },
+  {
+    "id": "11",
+    "productName": "Cebolla Paiteña",
+    "region": "Tungurahua",
+    "price": 0.45,
+    "unit": "kilo",
+    "trend": "up",
+    "source": "Mercado Mayorista"
+  }
+]

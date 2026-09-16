@@ -1,93 +1,150 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppView } from './types';
-import { Icons } from './components/UI';
-import { SocialView } from './views/SocialView';
-import { MarketView } from './views/MarketView';
-import { DiagnosisView } from './views/DiagnosisView';
-import { WikiView } from './views/WikiView';
-import { GroupsView } from './views/GroupsView';
+import { Onboarding } from './src/views/Onboarding';
+import { MarketPrices } from './src/views/MarketPrices';
+import { DiseasesCatalog } from './src/views/DiseasesCatalog';
+import { Calculator } from './src/views/Calculator';
 
+// ── Icons ────────────────────────────────────────────────────────────────────
+const IconPrices = ({ active }: { active: boolean }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-6 h-6">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5l7.5-7.5 4 4L21 4M21 4h-5m5 0v5" />
+  </svg>
+);
+const IconBug = ({ active }: { active: boolean }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-6 h-6">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 18c-4 0-7-3-7-7 0-3 2-5.5 5-6.5M12 18c4 0 7-3 7-7 0-3-2-5.5-5-6.5M12 18v3m0-21v3m-7 3H3m18 0h-2m-14 4H3m18 0h-2M5.5 8.5l-2-2m17 2l-2-2" />
+  </svg>
+);
+const IconCalc = ({ active }: { active: boolean }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-6 h-6">
+    <rect x="4" y="3" width="16" height="18" rx="2" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h8M8 12h2m4 0h2M8 17h2m4 0h2" />
+  </svg>
+);
+const IconLeaf = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-5 h-5">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 19c-4-1-7-5-6-10C9 5 14 3 19 5c1 5-2 12-7 14z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 19c0-4-1-8-4-11" />
+  </svg>
+);
+
+// ── Offline Banner ────────────────────────────────────────────────────────────
+const OfflineBanner = () => {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  useEffect(() => {
+    const on = () => setIsOnline(true);
+    const off = () => setIsOnline(false);
+    window.addEventListener('online', on);
+    window.addEventListener('offline', off);
+    return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off); };
+  }, []);
+  if (isOnline) return null;
+  return (
+    <div className="offline-bar text-center py-1.5 px-4 text-xs font-bold tracking-wide">
+      📵 Sin conexión — mostrando datos guardados en tu dispositivo
+    </div>
+  );
+};
+
+// ── App ───────────────────────────────────────────────────────────────────────
 const App: React.FC = () => {
-  const [activeView, setActiveView] = useState<AppView>(AppView.SOCIAL);
+  const [selectedCrops, setSelectedCrops] = useState<string[]>([]);
+  const [activeView, setActiveView] = useState<AppView>(AppView.ONBOARDING);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('agriecuador_crops');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed.length > 0) {
+        setSelectedCrops(parsed);
+        setActiveView(AppView.PRICES);
+      }
+    }
+  }, []);
+
+  const toggleCrop = (id: string) =>
+    setSelectedCrops(prev => prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]);
+
+  const handleOnboardingComplete = () => {
+    localStorage.setItem('agriecuador_crops', JSON.stringify(selectedCrops));
+    setActiveView(AppView.PRICES);
+  };
+
+  const navItems = [
+    { view: AppView.PRICES,   label: 'Precios',       Icon: IconPrices },
+    { view: AppView.DISEASES, label: 'Enfermedades',  Icon: IconBug    },
+    { view: AppView.CALC,     label: 'Calculadora',   Icon: IconCalc   },
+  ];
 
   const renderView = () => {
     switch (activeView) {
-      case AppView.SOCIAL: return <SocialView />;
-      case AppView.MARKET: return <MarketView />;
-      case AppView.DIAGNOSIS: return <DiagnosisView />;
-      case AppView.WIKI: return <WikiView />;
-      case AppView.GROUPS: return <GroupsView />;
-      default: return <SocialView />;
+      case AppView.ONBOARDING: return <Onboarding selectedCrops={selectedCrops} toggleCrop={toggleCrop} onComplete={handleOnboardingComplete} />;
+      case AppView.PRICES:     return <MarketPrices selectedCrops={selectedCrops} />;
+      case AppView.DISEASES:   return <DiseasesCatalog selectedCrops={selectedCrops} />;
+      case AppView.CALC:       return <Calculator selectedCrops={selectedCrops} />;
+      default:                 return <MarketPrices selectedCrops={selectedCrops} />;
     }
   };
 
-  const NavItem = ({ view, icon, label }: { view: AppView; icon: React.ReactNode; label: string }) => {
-    const isActive = activeView === view;
-    return (
-      <button 
-        onClick={() => setActiveView(view)}
-        className={`flex flex-col items-center justify-center w-full py-2 transition-colors ${
-          isActive ? 'text-emerald-600' : 'text-gray-400 hover:text-gray-600'
-        }`}
-      >
-        <div className={`p-1 rounded-xl transition-all ${isActive ? 'bg-emerald-50 -translate-y-1' : ''}`}>
-          {React.cloneElement(icon as React.ReactElement, { 
-            className: `w-6 h-6 ${isActive ? 'stroke-2' : 'stroke-2'}` 
-          })}
-        </div>
-        <span className={`text-[10px] mt-1 font-medium ${isActive ? 'opacity-100' : 'opacity-80'}`}>
-          {label}
-        </span>
-      </button>
-    );
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col mx-auto max-w-md md:max-w-2xl shadow-2xl relative">
-      
-      {/* Top Bar */}
-      <header className="bg-white px-6 py-4 flex items-center justify-between sticky top-0 z-50 border-b border-gray-100">
-        <div className="flex items-center space-x-2">
-          <div className="bg-emerald-600 rounded-lg p-1.5">
-            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+    <div className="min-h-screen flex flex-col mx-auto max-w-md md:max-w-lg shadow-2xl relative" style={{ background: '#f7f3ee' }}>
+
+      <OfflineBanner />
+
+      {/* Header */}
+      <header className="glass px-5 py-3 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+        <div className="flex items-center gap-2">
+          <div className="bg-green-700 rounded-xl p-2 text-white shadow-md">
+            <IconLeaf />
           </div>
-          <h1 className="text-xl font-bold tracking-tight text-gray-800">Agri<span className="text-emerald-600">Connect</span></h1>
+          <div>
+            <h1 className="text-lg font-black text-green-900 leading-none">AgriEcuador</h1>
+            <p className="text-[10px] text-green-700 font-semibold leading-none">Precios · Cultivos · Campo</p>
+          </div>
         </div>
-        <img src="https://picsum.photos/seed/user/40/40" alt="Profile" className="w-9 h-9 rounded-full border border-gray-200" />
+
+        {activeView !== AppView.ONBOARDING && (
+          <button
+            onClick={() => setActiveView(AppView.ONBOARDING)}
+            className="flex items-center gap-1.5 text-xs font-bold text-green-800 bg-green-100 hover:bg-green-200 px-3 py-2 rounded-full transition-colors border border-green-200"
+          >
+            🌾 Mis Cultivos
+          </button>
+        )}
       </header>
 
-      {/* Main Content Area */}
-      <main className="flex-1 p-4 overflow-y-auto">
+      {/* Main */}
+      <main className="flex-1 overflow-y-auto pb-24 view-enter">
         {renderView()}
       </main>
 
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 w-full max-w-md md:max-w-2xl bg-white border-t border-gray-100 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] pb-safe-area">
-        <div className="flex justify-around items-end h-16 pb-1">
-          <NavItem view={AppView.SOCIAL} icon={<Icons.Home />} label="Inicio" />
-          <NavItem view={AppView.GROUPS} icon={<Icons.Users />} label="Grupos" />
-          
-          {/* Central Action Button (Diagnosis) */}
-          <div className="relative -top-5">
-            <button 
-              onClick={() => setActiveView(AppView.DIAGNOSIS)}
-              className={`flex items-center justify-center w-14 h-14 rounded-full shadow-emerald-200 shadow-xl transition-transform active:scale-95 ${
-                activeView === AppView.DIAGNOSIS ? 'bg-emerald-700 ring-4 ring-emerald-100' : 'bg-emerald-600 hover:bg-emerald-700'
-              }`}
-            >
-              <Icons.Camera className="w-7 h-7 text-white" />
-            </button>
+      {/* Bottom Nav */}
+      {activeView !== AppView.ONBOARDING && (
+        <nav className="glass fixed bottom-0 w-full max-w-md md:max-w-lg border-t border-white/60 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] z-50">
+          <div className="flex justify-around items-center h-16 px-2">
+            {navItems.map(({ view, label, Icon }) => {
+              const isActive = activeView === view;
+              return (
+                <button
+                  key={view}
+                  onClick={() => setActiveView(view)}
+                  className={`flex flex-col items-center justify-center gap-1 w-full py-1 rounded-xl transition-all ${
+                    isActive ? 'text-green-700' : 'text-gray-400 hover:text-gray-600'
+                  }`}
+                >
+                  <div className={`p-1.5 rounded-xl transition-all ${isActive ? 'bg-green-100 scale-110 shadow-sm' : ''}`}>
+                    <Icon active={isActive} />
+                  </div>
+                  <span className={`text-[9px] font-bold tracking-wide uppercase ${isActive ? 'text-green-700' : 'text-gray-400'}`}>
+                    {label}
+                  </span>
+                </button>
+              );
+            })}
           </div>
-
-          <NavItem view={AppView.MARKET} icon={<Icons.ShoppingBag />} label="Tienda" />
-          <NavItem view={AppView.WIKI} icon={<Icons.Book />} label="Wiki" />
-        </div>
-      </nav>
-      
-      {/* Safe area spacer for mobile */}
-      <div className="h-safe-area bg-white"></div>
+        </nav>
+      )}
     </div>
   );
 };

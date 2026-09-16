@@ -1,0 +1,19 @@
+{
+  "name": "AgriEcuador",
+  "short_name": "AgriEcuador",
+  "description": "Precios de mercado y guía de enfermedades para agricultores del Ecuador",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f3ee",
+  "theme_color": "#15803d",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2315803d'/><text y='.9em' font-size='70' x='15'>🌾</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["agriculture", "productivity", "food"]
+}

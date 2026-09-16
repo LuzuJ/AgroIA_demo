@@ -99,8 +99,8 @@ const App: React.FC = () => {
             <IconLeaf />
           </div>
           <div>
-            <h1 className="text-lg font-black text-green-900 leading-none">AgriEcuador</h1>
-            <p className="text-[10px] text-green-700 font-semibold leading-none">Precios · Cultivos · Campo</p>
+            <h1 className="text-xl font-black text-green-900 leading-none">AgroL</h1>
+            <p className="text-xs text-green-700 font-semibold leading-none mt-1">Precios · Cultivos · Campo</p>
           </div>
         </div>
 

@@ -1,6 +1,8 @@
-# AgriEcuador: Precios de Mercado y Doctor de Cultivos con IA
+# 🌱 AgroL: Precios de Mercado y Doctor de Cultivos con IA
 
-AgriEcuador es una aplicación web progresiva (PWA) enfocada en empoderar a los agricultores de Ecuador mediante acceso a información vital y herramientas de diagnóstico, optimizada para funcionar en zonas de baja conectividad.
+![AgroL Selecciona Productos](/public/images/readme/selecciona_productos.png)
+
+AgroL es una aplicación web progresiva (PWA) enfocada en empoderar a los agricultores de Ecuador mediante acceso a información vital y herramientas de diagnóstico, optimizada para funcionar en zonas de baja conectividad.
 
 ## 🚀 Características Principales
 
@@ -10,11 +12,20 @@ AgriEcuador es una aplicación web progresiva (PWA) enfocada en empoderar a los 
     *   **Caché Offline:** Los precios se guardan en el dispositivo para poder consultarlos sin internet.
     *   **Calculadora de Ingresos:** Filtra los precios por Quintal, Kilos, Libras o Toneladas y estima tus ganancias.
 
-2.  **Doctor de Cultivos Inteligente:**
+    ![Mercado](/public/images/readme/precios_mercado.png)
+
+2.  **Calculadora de Ingresos:**
+    *   Permite hacer conversiones de unidades rápidas (Kilos, Libras, Quintales, Toneladas) y da el estimado total de ingresos para el agricultor basado en el precio en tiempo real.
+    
+    ![Calculadora](/public/images/readme/calculadora.png)
+
+3.  **Doctor de Cultivos Inteligente:**
     *   Catálogo avanzado con las enfermedades más críticas por cultivo.
     *   Tarjetas interactivas con **Acción Inmediata**, **Control Biológico**, y **Control Químico**.
     *   Checklists interactivos paso a paso para aplicar tratamientos, con precauciones, dosis y frecuencia.
     *   Fotos de alta resolución de patologías reales almacenadas localmente para funcionar 100% offline.
+
+    ![Doctor de Cultivos](/public/images/readme/enfermedades.png)
 
 3.  **Chatbot IA Agro-experto (Gemini):**
     *   Integración con el SDK de Gemini de Google para responder consultas agrícolas avanzadas en tiempo real.
@@ -56,7 +67,9 @@ VITE_API_NINJAS_KEY=tu_clave_aqui
 
 ## 🌐 Despliegue a Producción
 
-AgriEcuador está diseñado como una SPA estática, por lo que es ideal para alojarse gratuitamente en plataformas como **Vercel**, **Netlify** o **GitHub Pages**.
+AgroL está diseñado como una SPA estática, por lo que es ideal para alojarse gratuitamente en plataformas como **Vercel**, **Netlify** o **GitHub Pages**.
+
+- URL en Vivo: [AgroL en Vercel](https://agrol-zeta.vercel.app/)
 
 1.  Sube este repositorio a GitHub.
 2.  Conecta tu cuenta de GitHub a Vercel/Netlify.
